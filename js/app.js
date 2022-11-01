@@ -78,14 +78,11 @@ let dataFetched = await Fetched;
 })();
 
 input.addEventListener("keydown", (e) => {
-  if (e.key === "Enter") {
-    let search = e.target.value;
-    dataFetched = Fetched.filter((e) =>
-      e.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
-    );
-    disp(dataFetched);
-    e.target.value = "";
-  }
+  let search = e.target.value;
+  dataFetched = Fetched.filter((e) =>
+    e.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+  );
+  disp(dataFetched);
 });
 
 btns.forEach((element) => {
