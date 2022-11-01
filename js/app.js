@@ -1,15 +1,15 @@
 const card = document.querySelector(".card");
 const input = document.querySelector("input");
 const btns = document.querySelectorAll("button");
-
 import { fetchData } from "./api/FetchData.js";
 import { image_gender } from "./utils/calculations.js";
 import { TrueorFalse } from "./utils/calculations.js";
 import { banner } from "./utils/calculations.js";
 
 function disp(dataFetched) {
+  let html = "";
   dataFetched.forEach((el) => {
-    card.innerHTML +=
+    html +=
       `<div class = "character">` +
       banner(el) +
       `<h1> ${TrueorFalse(el.name)}</h1>` +
@@ -66,6 +66,7 @@ function disp(dataFetched) {
       `</div>` +
       `</div>`;
   });
+  card.innerHTML = html;
 }
 
 const Fetched = await fetchData();
@@ -79,22 +80,21 @@ let dataFetched = await Fetched;
 input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") {
     let search = e.target.value;
-    card.innerHTML = "";
     dataFetched = Fetched.filter((e) =>
       e.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
     );
     disp(dataFetched);
+    e.target.value = "";
   }
 });
 
 btns.forEach((element) => {
   element.addEventListener("click", () => {
     if (element.innerText == "All") {
-      card.innerHTML = "";
       disp(Fetched);
     } else {
       dataFetched = Fetched.filter((e) => e.house.includes(element.innerText));
-      card.innerHTML = "";
+      disp(dataFetched);
       disp(dataFetched);
     }
   });
